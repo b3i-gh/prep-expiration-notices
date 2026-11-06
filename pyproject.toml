@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prep-notices"
+version = "0.1.0"
+description = "Create date-only Google Tasks from expiration rows in Google Sheets"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "google-api-python-client>=2.150,<3",
+    "google-auth-httplib2>=0.2,<1",
+    "google-auth-oauthlib>=1.2,<2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "ruff>=0.9,<1"]
+
+[project.scripts]
+prep-notices = "prep_notices.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --basetemp=.cache/test-tmp"
+cache_dir = ".cache/pytest"
+tmp_path_retention_count = 1
+
+[tool.ruff]
+target-version = "py311"
+cache-dir = ".cache/ruff"
+extend-exclude = [".cache"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
